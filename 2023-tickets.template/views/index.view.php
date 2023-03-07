@@ -3,6 +3,9 @@
 <head>
     <title>Gestor d'incidències</title>
     <link href="assets/global.css" rel="stylesheet"/>
+    <?php if ($mode == 'dark') :?>
+    <link href="assets/dark.css" rel="stylesheet"/>
+    <?php endif;?>
 </head>
 <body>
 <header>
