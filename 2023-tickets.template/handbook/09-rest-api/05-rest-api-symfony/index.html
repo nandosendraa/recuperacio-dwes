@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="ca">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.2.6" name="generator"/>
+<title>Desenvolupament de serveis REST amb Symfony - DWES</title>
+<link href="../../assets/stylesheets/main.802231af.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+</head>
+<body data-md-color-accent="" data-md-color-primary="red" data-md-color-scheme="default" dir="ltr">
+<script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#desenvolupament-de-serveis-rest-amb-symfony">
+          Salta el contingut
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="DWES" class="md-header__button md-logo" data-md-component="logo" href="../.." title="DWES">
+<img alt="logo" src="../../assets/logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            DWES
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Desenvolupament de serveis REST amb Symfony
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="" data-md-color-media="" data-md-color-primary="red" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="" data-md-color-media="" data-md-color-primary="red" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Cerca" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Cerca" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--integrated" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="DWES" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="DWES">
+<img alt="logo" src="../../assets/logo.png"/>
+</a>
+    DWES
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+        Inici
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+        1.- Introducció a la programació Web
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="1.- Introducció a la programació Web" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          1.- Introducció a la programació Web
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../01-intro/01-intro/">
+        Estructura aplicacions web
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../01-intro/02-developement/">
+        Preparació de l'entorn de desenvolupament
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../01-intro/99-tasks/">
+        Activitats
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+        2.- El llenguatge PHP
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="2.- El llenguatge PHP" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          2.- El llenguatge PHP
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02-basics/02-phpbasics/">
+        PHP Bàsic
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02-basics/99-activities/">
+        Activitats
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
+        3.- PHP Orientat a Objectes
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="3.- PHP Orientat a Objectes" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+          3.- PHP Orientat a Objectes
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03-phpoo/0301-phpoo-basic/">
+        PHP OO Bàsic
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03-phpoo/0302-phpoo-advanced/">
+        PHP OO Avançat
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03-phpoo/0303-errorhandling/">
+        Errors i excepcions
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03-phpoo/0399-activities/">
+        Activitats
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5">
+        4.- Programació web
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="4.- Programació web" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+          4.- Programació web
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../04-web-programming/04-01-forms/">
+        Formularis
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../04-web-programming/04-02-state/">
+        Manteniment de l'estat
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../04-web-programming/04-03-authentication/">
+        Autenticació
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../04-web-programming/04-04-best-practices/">
+        Bones pràctiques
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../04-web-programming/04-99-tasks/">
+        Activitats
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6">
+        5.- Accés a dades amb PHP
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="5.- Accés a dades amb PHP" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+          5.- Accés a dades amb PHP
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05-data-access/0500-intro/">
+        Introducció
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05-data-access/0501-data-access/">
+        Accés a dades amb PHP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05-data-access/0599-tasks/">
+        Activitats
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="desenvolupament-de-serveis-rest-amb-symfony">Desenvolupament de serveis REST amb Symfony</h1>
+<h2 id="construint-una-api-rest-basica">Construint una API REST bàsica</h2>
+<p>Vegem ara quins passos donar per a construir una API REST que done
+suport a les operacions bàsiques sobre una o diverses entitats:
+consultes (GET), insercions (POST), modificacions (PUT) i esborrats
+(DELETE).</p>
+<p>A l'hora d'implementar una solució en Symfony ens trobem en tres opcions:</p>
+<ol>
+<li>API senzilla amb els mètodes que ens proporciona la classe <code>AbstractController</code>.</li>
+<li>Fer ús d'un bundle com <strong>FOSRestBundle</strong> que ens permet una major flexibilitat.</li>
+<li>Fer ús d'<a href="https://api-platform.com">API platform</a>, una ferramenta molt completa basada en PHP per a crear REST API.</li>
+</ol>
+<p>L'elecció d'una solució o altra dependrà de cada projecte. En aquest curs emprarem <code>FOSRestBundle</code>.</p>
+<h2 id="arrencada-del-projecte">Arrencada del projecte</h2>
+<p>El projecte d'exemple serà una projecte independent basat en Movies. Així podrem aprofitar el model de dades.</p>
+<p>Primerament crearem el projecte de Symfony:</p>
+<p><div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="go">composer create-project symfony/skeleton api-movies-symfony ^5.4</span>
+</code></pre></div>
+En aquesta ordre crearem un projecte bàsic de Symfony en la versió 5.4, es tracta d'un projecte que no inclou ni Doctrine, 
+ni Twig, per exemple.</p>
+<p>Twig no serà necessari ja que es tracta d'una API però Doctrine, sí. A més, caldran altres components que instal·larem a continuació:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="go">composer require orm</span>
+<span class="linenos" data-linenos="2 "></span><span class="go">composer require orm-fixtures --dev</span>
+<span class="linenos" data-linenos="3 "></span><span class="go">composer require security</span>
+<span class="linenos" data-linenos="4 "></span><span class="go">composer require symfony/maker-bundle</span>
+<span class="linenos" data-linenos="5 "></span><span class="go">composer require symfony/validator</span>
+<span class="linenos" data-linenos="6 "></span><span class="go">composer require symfony/apache-pack</span>
+<span class="linenos" data-linenos="7 "></span><span class="go">composer require sensio/framework-extra-bundle</span>
+</code></pre></div>
+<p>El model del dades, les entitats i els repositoris el copiarem del projecte Movies. </p>
+<p>Caldrà instal·lar també els components que s'usen per a la generació de les dades:</p>
+<p><div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="go">composer require woodsandwalker/faker-picture --dev</span>
+<span class="linenos" data-linenos="2 "></span><span class="go">composer require FakerPHP/Faker --dev</span>
+</code></pre></div>
+Llevarem les referències a VichUploader, ja que usarem els formularis d'una altra forma.</p>
+<h2 id="installant-els-bundles-necessaris">Instal·lant els bundles necessaris</h2>
+<p>A més del que ja tenim instal·lat caldrà fer ús d'un bundle específic per a
+desenvolupar APIs, anomenat <strong>FOSRestBundle</strong>. Està creat per
+l'equip de desenvolupament <em>Friends Of Symfony</em>, responsable de diversos
+<em>bundles</em> populars per a aquest framework. A més, aquest bundle requereix
+d'un altre addicional, que s'encarregarà de
+serializar/deserializar les dades que s'envien client i servidor,
+emprant el format JSON (encara que es pot triar un altre format, com XML
+o HTML, però ens centrarem en JSON). Aquest bundle s'anomena
+<strong>Serializer</strong> .</p>
+<p>Abans de continuar, alguns conceptes:</p>
+<ul>
+<li><strong>Serialitzar</strong>. La serialització és el procés de convertir un objecte en una altre format per a emmagatzemar-lo o transmetre'l i posteriorment ser decodificat.</li>
+<li><strong>Normalitzar.</strong> Ajuden en el procés de serialització, convertint els objectes en un element intermig, com pot ser una array.</li>
+</ul>
+<p><img alt="Component serialitzador" src="../assets/serializer-component.png"/></p>
+<p>Resumint, aquests són els comandos que necessitarem (i en aquest ordre):</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span>composer require symfony/serializer
+<span class="linenos" data-linenos="2 "></span>composer require friendsofsymfony/rest-bundle
+</code></pre></div>
+<h2 id="configurant-el-serialitzador">Configurant el serialitzador</h2>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="c1"># config/packages/framework.yaml</span>
+<span class="linenos" data-linenos="2 "></span><span class="nt">framework</span><span class="p">:</span>
+<span class="linenos" data-linenos="3 "></span>    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="linenos" data-linenos="4 "></span>    <span class="l l-Scalar l-Scalar-Plain">serializer</span><span class="p p-Indicator">:</span>
+<span class="linenos" data-linenos="5 "></span>        <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="linenos" data-linenos="6 "></span>        <span class="nt">mapping</span><span class="p">:</span>
+<span class="linenos" data-linenos="7 "></span>            <span class="nt">paths</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">'%kernel.project_dir%/config/serializer/'</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<p>Definim els grups de serialització de les entitats.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># config/serializer/Movie.yaml</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="nt">App\Entity\Movie</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 3 "></span>    <span class="nt">attributes</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 4 "></span>        <span class="nt">id</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 5 "></span>            <span class="nt">groups</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">'movie'</span><span class="p p-Indicator">]</span>
+<span class="linenos" data-linenos=" 6 "></span>        <span class="nt">title</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 7 "></span>            <span class="nt">groups</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">'movie'</span><span class="p p-Indicator">]</span>
+<span class="linenos" data-linenos=" 8 "></span>        <span class="nt">poster</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 9 "></span>            <span class="nt">groups</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">'movie'</span><span class="p p-Indicator">]</span>
+<span class="linenos" data-linenos="10 "></span>        <span class="nt">overview</span><span class="p">:</span>
+<span class="linenos" data-linenos="11 "></span>            <span class="nt">groups</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">'movie'</span><span class="p p-Indicator">]</span>
+<span class="linenos" data-linenos="12 "></span>        <span class="nt">rating</span><span class="p">:</span>
+<span class="linenos" data-linenos="13 "></span>            <span class="nt">groups</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">'movie'</span><span class="p p-Indicator">]</span>
+<span class="linenos" data-linenos="14 "></span>        <span class="nt">releaseDate</span><span class="p">:</span>
+<span class="linenos" data-linenos="15 "></span>            <span class="nt">groups</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">'movie'</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<p>Configurem <em>FOSRestbundle</em>.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># config/packages/fos_rest.yaml</span>
+<span class="linenos" data-linenos=" 2 "></span>
+<span class="linenos" data-linenos=" 3 "></span><span class="c1"># Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html</span>
+<span class="linenos" data-linenos=" 4 "></span><span class="nt">fos_rest</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 5 "></span>    <span class="nt">param_fetcher_listener</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="linenos" data-linenos=" 6 "></span>    <span class="nt">view</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 7 "></span>        <span class="nt">empty_content</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+<span class="linenos" data-linenos=" 8 "></span>        <span class="nt">view_response_listener</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="linenos" data-linenos=" 9 "></span>        <span class="nt">failed_validation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTTP_BAD_REQUEST</span>
+<span class="linenos" data-linenos="10 "></span>        <span class="nt">formats</span><span class="p">:</span>
+<span class="linenos" data-linenos="11 "></span>            <span class="nt">json</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="linenos" data-linenos="12 "></span>            <span class="nt">xml</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="linenos" data-linenos="13 "></span>    <span class="nt">body_listener</span><span class="p">:</span>
+<span class="linenos" data-linenos="14 "></span>        <span class="nt">decoders</span><span class="p">:</span>
+<span class="linenos" data-linenos="15 "></span>            <span class="nt">json</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">fos_rest.decoder.json</span>
+<span class="linenos" data-linenos="16 "></span>    <span class="nt">format_listener</span><span class="p">:</span>
+<span class="linenos" data-linenos="17 "></span>        <span class="nt">rules</span><span class="p">:</span>
+<span class="linenos" data-linenos="18 "></span>            <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt"> path</span><span class="p">:</span> <span class="s">'/api'</span><span class="p p-Indicator">,</span><span class="nt"> priorities</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="s">'json'</span> <span class="p p-Indicator">],</span><span class="nt"> fallback_format</span><span class="p">:</span> <span class="nv">json</span><span class="p p-Indicator">,</span><span class="nt"> prefer_extension</span><span class="p">:</span> <span class="nv">false</span> <span class="p p-Indicator">}</span>
+<span class="linenos" data-linenos="19 "></span>            <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt"> path</span><span class="p">:</span> <span class="s">'^/'</span><span class="p p-Indicator">,</span><span class="nt"> stop</span><span class="p">:</span> <span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> fallback_format</span><span class="p">:</span> <span class="nv">html</span> <span class="p p-Indicator">}</span>
+<span class="linenos" data-linenos="20 "></span>    <span class="nt">exception</span><span class="p">:</span>
+<span class="linenos" data-linenos="21 "></span>        <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="linenos" data-linenos="22 "></span>    <span class="nt">serializer</span><span class="p">:</span>
+<span class="linenos" data-linenos="23 "></span>        <span class="nt">serialize_null</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<h2 id="definint-els-serveis">Definint els serveis</h2>
+<p>Ara que ja tenim instal·lat el necessari per a començar a definir els
+serveis, anem al que és important. Crearem una nova classe, 
+on definirem els serveis bàsics sobre
+l'entitat <code>Movie</code>. Cridarem a aquesta classe <code>ApiMovieController</code>, i
+l'afegirem en la carpeta <code>src/Controller</code>:</p>
+<p>La classe té una anotació <code>@Route</code>, que implica que qualsevol ruta que
+indiquem dins va a tenir aqueix prefix (en aquest cas, totes les rutes
+dels mètodes interns tindran el prefix <code>/api/v1/movies</code>).</p>
+<h3 id="llistat-de-tots-els-elements-get">Llistat de tots els elements (GET /)</h3>
+<p>Afegirem un mètode a la nostra classe anterior perquè torne, en
+format JSON totes les pel·lícules de la base de dades. El codi del
+mètode és el següent:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="k">class</span> <span class="nc">ApiMovieController</span> <span class="k">extends</span> <span class="nx">AbstractFOSRestController</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="p">{</span>
+<span class="linenos" data-linenos=" 3 "></span>    <span class="sd">/**</span>
+<span class="linenos" data-linenos=" 4 "></span><span class="sd">     * @Rest\Get(path="/api/v1/movies", name="api_movies")</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="sd">     * @Rest\View(serializerGroups={"movie"}, serializerEnableMaxDepthChecks=true)</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="sd">     */</span>
+<span class="linenos" data-linenos=" 7 "></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">list</span><span class="p">(</span><span class="nx">MovieRepository</span> <span class="nv">$movieRepository</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos" data-linenos=" 8 "></span>        <span class="k">return</span> <span class="nv">$movieRepository</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="linenos" data-linenos=" 9 "></span>    <span class="p">}</span>
+<span class="linenos" data-linenos="10 "></span><span class="p">}</span>
+</code></pre></div>
+<p>Analitzem alguns aspectes importants que no hem vist abans:</p>
+<ul>
+<li>El mètode <code>list</code> té una anotació <code>@Rest\Get</code> que és similar a
+    <code>@Route</code> però permet especificar la sol·licitud que s'atendrà (GET,
+    en aquest cas), i la ruta associada (hem indicat <code>/api/v1/movies</code>, la qual
+    cosa significa que s'atenen peticions GET a <code>/api/v1/movies</code>, que és
+    la ruta base de la classe).</li>
+<li>Dins del mètode, simplement obtenim, el llistat de totes les pel·lícules que 
+  ja es mostra serialitzat a JSON, gràcies a la configuració que hem realitzat.</li>
+</ul>
+<h3 id="insercio-de-recursos-post-apiv1movies">Inserció de recursos POST (<code>/api/v1/movies</code>)</h3>
+<p>Hi ha diverses alternatives però per simplificar la gestió de les insercions la farem amb l'ajuda del 
+component <code>symfony/form</code> que caldrà instal·lar.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="go">composer require form</span>
+</code></pre></div>
+<p>Amb l'ordre <code>make:form</code> crearem un el formulari que quedarà així:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="k">namespace</span> <span class="nx">App\Form</span><span class="p">;</span>
+<span class="linenos" data-linenos=" 2 "></span>
+<span class="linenos" data-linenos=" 3 "></span><span class="k">use</span> <span class="nx">App\Entity\Movie</span><span class="p">;</span>
+<span class="linenos" data-linenos=" 4 "></span><span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="k">use</span> <span class="nx">Symfony\Component\Form\Extension\Core\Type\DateType</span><span class="p">;</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
+<span class="linenos" data-linenos=" 7 "></span><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolver</span><span class="p">;</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span><span class="k">class</span> <span class="nc">MovieType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="linenos" data-linenos="10 "></span><span class="p">{</span>
+<span class="linenos" data-linenos="11 "></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+<span class="linenos" data-linenos="12 "></span>    <span class="p">{</span>
+<span class="linenos" data-linenos="13 "></span>        <span class="nv">$builder</span>
+<span class="linenos" data-linenos="14 "></span>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">'title'</span><span class="p">)</span>
+<span class="linenos" data-linenos="15 "></span>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">'poster'</span><span class="p">)</span>
+<span class="linenos" data-linenos="16 "></span>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">'overview'</span><span class="p">)</span>
+<span class="linenos" data-linenos="17 "></span>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">'releaseDate'</span><span class="p">,</span> <span class="nx">DateType</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="p">[</span><span class="s2">"widget"</span><span class="o">=&gt;</span><span class="s2">"single_text"</span><span class="p">])</span>
+<span class="linenos" data-linenos="18 "></span>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">'updatedAt'</span><span class="p">)</span>
+<span class="linenos" data-linenos="19 "></span>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">'genre'</span><span class="p">)</span>
+<span class="linenos" data-linenos="20 "></span>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">'user'</span><span class="p">)</span>
+<span class="linenos" data-linenos="21 "></span>        <span class="p">;</span>
+<span class="linenos" data-linenos="22 "></span>    <span class="p">}</span>
+<span class="linenos" data-linenos="23 "></span>
+<span class="linenos" data-linenos="24 "></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">configureOptions</span><span class="p">(</span><span class="nx">OptionsResolver</span> <span class="nv">$resolver</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+<span class="linenos" data-linenos="25 "></span>    <span class="p">{</span>
+<span class="linenos" data-linenos="26 "></span>        <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">([</span>
+<span class="linenos" data-linenos="27 "></span>            <span class="s1">'data_class'</span> <span class="o">=&gt;</span> <span class="nx">Movie</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> 
+<span class="linenos" data-linenos="28 "></span>            <span class="s1">'csrf_protection'</span><span class="o">=&gt;</span><span class="k">false</span>
+<span class="linenos" data-linenos="29 "></span>        <span class="p">]);</span>
+<span class="linenos" data-linenos="30 "></span>    <span class="p">}</span>
+<span class="linenos" data-linenos="31 "></span><span class="p">}</span>
+</code></pre></div>
+<p>En aquest formulari no ens preocupem pel tipus de control a mostrar perquè no és rellevant 
+excepte en el cas de la data, que sí que cal especificar que espera la data com un text. Afegim 
+també les propietats que formen part de relacions <code>user</code> i <code>genre</code>.</p>
+<p>En el cas de les opcions de configuració cal indicar que no usarem protecció CSRF. 
+El sistema de control d'accés l'implementarem més endavant.</p>
+<p>El controlador quedaria així</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span>    <span class="sd">/**</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="sd">     * @Rest\Post(path="/movies", name="api_movies_create")</span>
+<span class="linenos" data-linenos=" 3 "></span><span class="sd">     * @Rest\View(serializerGroups={"movie"}, serializerEnableMaxDepthChecks=true)</span>
+<span class="linenos" data-linenos=" 4 "></span><span class="sd">     */</span>
+<span class="linenos" data-linenos=" 5 "></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">new</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">EntityManagerInterface</span> <span class="nv">$entityManager</span><span class="p">)</span>
+<span class="linenos" data-linenos=" 6 "></span>    <span class="p">{</span>       
+<span class="linenos" data-linenos=" 7 "></span>        <span class="nv">$movie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Movie</span><span class="p">();</span>
+<span class="linenos" data-linenos=" 8 "></span>        <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createForm</span><span class="p">(</span><span class="nx">MovieType</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$movie</span><span class="p">);</span>
+<span class="linenos" data-linenos=" 9 "></span>
+<span class="linenos" data-linenos="10 "></span>        <span class="nv">$data</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getContent</span><span class="p">(),</span> <span class="k">true</span><span class="p">);</span>
+<span class="linenos" data-linenos="11 "></span>        <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">submit</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="linenos" data-linenos="12 "></span>
+<span class="linenos" data-linenos="13 "></span>        <span class="k">if</span> <span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isSubmitted</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+<span class="linenos" data-linenos="14 "></span>            <span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$movie</span><span class="p">);</span>
+<span class="linenos" data-linenos="15 "></span>            <span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
+<span class="linenos" data-linenos="16 "></span>
+<span class="linenos" data-linenos="17 "></span>            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="nv">$movie</span><span class="p">,</span> <span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_CREATED</span><span class="p">);</span>
+<span class="linenos" data-linenos="18 "></span>        <span class="p">}</span>
+<span class="linenos" data-linenos="19 "></span>        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="nv">$form</span><span class="p">,</span> <span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_BAD_REQUEST</span><span class="p">);</span>
+<span class="linenos" data-linenos="20 "></span>    <span class="p">}</span>
+</code></pre></div>
+<p>Després de crear els dos objectes el que fem és obtenir les dades del <em>body</em> 
+de la sol·licitud, les convertim en un <em>array</em> associatiu i les processem
+mitjançant el formulari. Com que volem modificar el codi d'estat passem la informació a 
+la vista.</p>
+<p>Respecte a les entitats relacionades el que fem és enviar l'identificador en sol·licitud JSON,
+per exemple:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="p">{</span> 
+<span class="linenos" data-linenos="2 "></span>    <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"Ava"</span><span class="p">,</span>
+<span class="linenos" data-linenos="3 "></span>    <span class="nt">"releaseDate"</span><span class="p">:</span> <span class="s2">"2021-09-24"</span><span class="p">,</span>
+<span class="linenos" data-linenos="4 "></span>    <span class="nt">"genre"</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+<span class="linenos" data-linenos="5 "></span>    <span class="nt">"overview"</span><span class="p">:</span> <span class="s2">"Lorem ipsum ..."</span><span class="p">,</span>
+<span class="linenos" data-linenos="6 "></span>    <span class="nt">"poster"</span><span class="p">:</span> <span class="s2">"unnamed.jpg"</span><span class="p">,</span>
+<span class="linenos" data-linenos="7 "></span>    <span class="nt">"user"</span><span class="p">:</span> <span class="mi">7</span>
+<span class="linenos" data-linenos="8 "></span><span class="p">}</span>    
+</code></pre></div>
+<p>La resta de verbs (PUT i DELETE) es poden implementar seguint la mateixa estructura.</p>
+<h2 id="recursos">Recursos</h2>
+<ul>
+<li>En <a href="https://itdo-solutions.medium.com/primeros-pasos-con-symfony-5-como-api-rest-f0fa8c4d5962">Primeros pasos con Symfony 5 como API REST</a> 
+es genera una API basada en els mateixos components que hem utilitzat.</li>
+<li>En <a href="https://www.adcisolutions.com/knowledge/getting-started-rest-api-symfony-4">Getting started REST API with Symfony 4</a> 
+s'utilitzen diversos components addicionals com el Fos-Rest-Bundle i JMS Serializer.</li>
+<li>En <a href="https://www.youtube.com/playlist?list=PLC8ntN5__iMIAy9V6XO37Dx_bQ5V7zc-h">Curso de Symfony 5. Creando una API desde cero</a> teniu
+un curs molt complet sobre com crear una API en Symfony 5 des de cero.</li>
+<li><a href="https://api-platform.com/docs/core/getting-started/">API Platform</a> és un framework que permet crear API de forma quasi automàtica en
+Symfony.</li>
+<li><a href="https://medium.com/francisco-ugalde/restful-api-con-symfony-4-jwt-parte-1-2accdf59a0ae">https://medium.com/francisco-ugalde/restful-api-con-symfony-4-jwt-parte-1-2accdf59a0ae</a></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+<div class="md-footer-copyright__highlight">
+            2022-2023 Vicent Jordà - Licencia CC BY-NC-SA
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["toc.integrate"], "translations": {"clipboard.copy": "C\u00f2pia al porta-retalls", "clipboard.copied": "Copiat al porta-retalls", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Cerca", "search.result.placeholder": "Escriu per a comen\u00e7ar a cercar", "search.result.none": "Cap document coincideix", "search.result.one": "1 document coincident", "search.result.other": "# documents coincidents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+<script src="../../assets/javascripts/bundle.756773cc.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>
