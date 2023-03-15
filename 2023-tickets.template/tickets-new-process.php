@@ -53,13 +53,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 }*/
 
 if (empty($errors)) {
-    $_SESSION['data'] = $data;
-    $_SESSION['errors'][] = "S'ha creat la incidencia numero ##";
+    $date = new DateTime();
     try{
-        $pdo = new PDO("mysql:host=localhost; dbname=ticket", "root", "secret");
+        $pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
+        $stmt = $pdo->prepare('INSERT INTO ticket (title, message, email, created, status_id, screenshot) VALUES (:title, :message, :email, :created, :status_id, :screenshot)');
+        $stmt->execute([
+            ':title' => $data['title'],
+            ':message' => $data['message'],
+            ':email' => $data['email'],
+            ':created' => $date->format("Y-m-d H:i:s"),
+            ':status_id' => 0,
+            ':screenshot' => ''
+        ]);
     }
     catch (PDOException $e){var_dump($e);}
-
+    $_SESSION['data'] = $data;
+    $_SESSION['errors'][] = "S'ha creat la incidencia numero ".$pdo->lastInsertId();
     header('Location: index.php');
     exit();
 }else{

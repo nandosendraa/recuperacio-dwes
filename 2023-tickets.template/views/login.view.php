@@ -27,12 +27,14 @@
 </header>
 <h2>Login</h2>
 
-<?php if (!empty($error)) : ?>
-    <p><?= $error ?></p>
-<?php else : ?>
-    <p>Has iniciat sessió</p>
+<?php if (!empty($_SESSION['errors'])): ?>
+    <ul>
+        <?php foreach ($_SESSION['errors'] as $error) : ?>
+            <li><?= $error ?></li>
+        <?php endforeach ?>
+    </ul>
 <?php endif; ?>
-<form action="login.php" method="post" novalidate>
+<form action="login-process.php" method="post" novalidate>
     <div>
         <label for="username">Username</label>
         <input type="text"
