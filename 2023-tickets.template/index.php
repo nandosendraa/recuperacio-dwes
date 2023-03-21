@@ -20,8 +20,11 @@ if (isset($_GET['mode'])) {
 if (isset($_SESSION['data']))
     $data = $_SESSION['data'];
 
-if (isset($_SESSION['errors']))
+if (isset($_SESSION['errors'])) {
     $errors = $_SESSION['errors'];
+    unset($_SESSION['errors']);
+}
+
 
 const MAX_SIZE = 1024*1000;
 

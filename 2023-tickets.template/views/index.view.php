@@ -32,7 +32,7 @@
     </nav>
 </header>
 <h2>Nou tiquet</h2>
-<form method="post" action="tickets-new-process.php">
+<form method="post" action="tickets-new-process.php" enctype="multipart/form-data">
 
     <?php if (!empty($message)) :?>
         <h3><?=$message?></h3>
@@ -57,11 +57,11 @@
 
     <div>
         <label for="message">Missatge</label>
-        <textarea name="message" id="message" placeholder=<?=$data['message']?>></textarea>
+        <textarea name="message" id="message"><?=$data['message']?></textarea>
     </div>
     <div>
         <p>Fitxer addicional</p>
-        <input type="file" name="img"/>
+        <input type="file" name="screenshot"/>
     </div>
     <div>
         <input type="submit" value="Crear tiquet">
