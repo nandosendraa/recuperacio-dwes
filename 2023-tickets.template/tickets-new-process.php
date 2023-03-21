@@ -9,7 +9,7 @@ $data["message"] = "";
 $data["email"] = "";
 $data["screenshot"] = "";
 
-$validTypes = ["image/jpeg", "image/jpg"];
+$validTypes = ["image/jpeg", "image/jpg", "image/png"];
 
 $errors = [];
 
@@ -32,26 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         $errors[]='El correu es obligatori';
     elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
         $errors[]='El correu no es valid';
-}
-var_dump($_FILES['screenshot']);
-if (!empty($_FILES['screenshot']) && ($_FILES['screenshot']['error'] == UPLOAD_ERR_OK)) {
-    var_dump($_FILES['screenshot']);
-    if (!file_exists(SCREENSHOT_PATH))
-        mkdir(SCREENSHOT_PATH, 0777, true);
 
-    $tempFilename = $_FILES["screenshot"]["tmp_name"];
-    $currentFilename = $_FILES["screenshot"]["name"];
+    if ($_FILES['screenshot']['size']>1000000 || $_FILES['screenshot']['error']==1)
+        $errors[]='La imatge es masa gran';
 
-
-    $extension = explode("/", $_FILES["screenshot"]["type"])[1];
-    $newFilename = md5((string)rand()) . "." . $extension;
-    $newFullFilename = SCREENSHOT_PATH . "/" . $newFilename;
-    $fileSize = $_FILES["screenshot"]["size"];
-
-    move_uploaded_file($tempFilename, $newFullFilename);
-
-    $data["screenshot"] = $newFilename;
-
+    if(!in_array($_FILES['screenshot']['type'],$validTypes))
+        $errors[]='La imatge es de un tipus no valid';
 }
 
 if (empty($errors)) {
@@ -69,6 +55,24 @@ if (empty($errors)) {
         ]);
     }
     catch (PDOException $e){var_dump($e);}
+    if (!empty($_FILES['screenshot']) && ($_FILES['screenshot']['error'] == UPLOAD_ERR_OK)) {
+        if (!file_exists(SCREENSHOT_PATH))
+            mkdir(SCREENSHOT_PATH, 0777, true);
+
+        $tempFilename = $_FILES["screenshot"]["tmp_name"];
+        $currentFilename = $_FILES["screenshot"]["name"];
+
+
+        $extension = explode("/", $_FILES["screenshot"]["type"])[1];
+        $newFilename = md5((string)rand()) . "." . $extension;
+        $newFullFilename = SCREENSHOT_PATH . "/" . $newFilename;
+        $fileSize = $_FILES["screenshot"]["size"];
+
+        move_uploaded_file($tempFilename, $newFullFilename);
+
+        $data["screenshot"] = $newFilename;
+
+    }
     unset($_SESSION['data']);
     $_SESSION['errors'][] = "S'ha creat la incidencia numero ".$pdo->lastInsertId();
     header('Location: index.php');
