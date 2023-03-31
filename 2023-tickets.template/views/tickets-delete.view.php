@@ -33,7 +33,7 @@
         <input type="hidden" name="id" value="<?= $data["id"] ?>">
 
         <div>
-            <input type="submit" name="response" value="Sí"/>
+            <input type="submit" name="response" value="Si"/>
             <input type="submit" name="response" value="No"/>
         </div>
     </form>

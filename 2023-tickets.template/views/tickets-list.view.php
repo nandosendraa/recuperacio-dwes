@@ -44,7 +44,7 @@
                     <td><?= $ticket["message"] ?></td>
                     <td><?= $ticket["created"] ?></td>
                     <td><?= $ticket["status_id"] ?></td>
-                    <td><a href="tickets-close.php">tancar</a></td>
+                    <td><a href="tickets-close.php?id=<?= $ticket["id"] ?>">tancar</a></td>
                     <td><a href="tickets-delete.php?id=<?= $ticket["id"] ?>">esborrar</a></td>
                 </tr>
             <?php endforeach; ?>
