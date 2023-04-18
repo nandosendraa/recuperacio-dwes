@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 session_start();
+require_once 'src/DB.php';
 unset($_SESSION['errors']);
-$pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
+$db = new DB('ticket','root','secret');
 $username="";
 $password="";
 $errors=[];
@@ -16,10 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     if(empty($password))
         $errors[]= "Has de introduir la contrasenya";
 
-    $stmt = $pdo->prepare("SELECT * FROM user WHERE username = :user");
-    $stmt->bindParam(":user",$username);
-    $stmt->execute();
-    $userInfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $db->run("SELECT * FROM user WHERE username = :user",[':user'=>$username]);
+    $userInfo = $stmt->fetchAll();
+    var_dump($userInfo);
 
     if(empty($userInfo)){
         $errors[] = "L'usuari no es correcte";

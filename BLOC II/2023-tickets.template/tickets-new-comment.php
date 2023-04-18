@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 session_start();
-
-
+require_once 'src/DB.php';
+$db = new DB('ticket','root','secret');
 $comentari['fecha'] = "";
 $comentari['msg'] = "";
 $id = $_SESSION['lastTicketID'];
@@ -20,13 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if (empty($errors)) {
     $date = new DateTime();
     try {
-        $pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
-        $stmt = $pdo->prepare('INSERT INTO ticket_comment (ticket_id, msg, created) VALUES (:ticket_id, :msg, :created)');
-        $stmt->execute([
-            ':ticket_id' => $id,
-            ':msg' => $comentari['msg'],
-            ':created' => $date->format("Y-m-d H:i:s"),
-        ]);
+        $db->run('INSERT INTO ticket_comment (ticket_id, msg, created) VALUES (:ticket_id, :msg, :created)',[':ticket_id' => $id,':msg' => $comentari['msg'],':created' => $date->format("Y-m-d H:i:s")]);
     } catch (PDOException $e) {
         var_dump($e);
     }

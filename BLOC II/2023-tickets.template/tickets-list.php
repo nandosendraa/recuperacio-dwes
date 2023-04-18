@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 session_start();
+require_once 'src/DB.php';
+$db = new DB('ticket','root','secret');
 if(empty($_SESSION["user"])){
         header("Location: login.php");
         exit();
@@ -13,9 +15,7 @@ if($_SESSION['user'] != 'admin') {
 $tickets = [];
 
 try {
-    $pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
-    $stmt = $pdo->prepare("SELECT * FROM ticket ORDER BY created DESC");
-    $stmt->execute();
+    $stmt = $db->run("SELECT * FROM ticket ORDER BY created DESC");
     $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 catch (PDOException $e) {

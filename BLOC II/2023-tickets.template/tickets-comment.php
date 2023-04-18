@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
+require_once 'src/DB.php';
 session_start();
-$pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
+$db = new DB('ticket','root','secret');
 if(empty($_SESSION["user"])){
     header("Location: login.php");
     exit();
@@ -19,17 +20,11 @@ if (isset($_SESSION['errors'])){
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $id = $_GET['id'];
     $_SESSION['lastTicketID']=$id;
-    $stmt = $pdo->prepare("SELECT * FROM ticket_comment WHERE ticket_id = :id");
-    $stmt->execute([
-        ':id' => $id,
-    ]);
+
+    $stmt = $db->run("SELECT * FROM ticket_comment WHERE ticket_id = :id",[':id'=>$id]);
     $comentaris = $stmt->fetchAll();
 
-    $stmt = $pdo->prepare("SELECT * FROM ticket WHERE id = :id");
-    $stmt->execute([
-        ':id' => $id,
-
-    ]);
+    $stmt = $db->run("SELECT * FROM ticket WHERE id = :id",[':id'=>$id]);
     $data = $stmt->fetch();
 }
 

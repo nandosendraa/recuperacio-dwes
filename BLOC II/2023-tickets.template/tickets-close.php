@@ -1,22 +1,17 @@
 <?php declare(strict_types=1); ?>
-
 <?php
+require_once 'src/DB.php';
 session_start();
 if(empty($_SESSION["user"])){
     header("Location: login.php");
     exit();
 }
-$pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
+$db = new DB('ticket','root','secret');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $_SESSION['id'] = $_GET['id'];
 
-
-    $stmt = $pdo->prepare("UPDATE ticket SET status_id = 2 WHERE id = :id");
-    $stmt->execute([
-        ':id' => $_SESSION['id'],
-
-    ]);
+    $stmt = $db->run("UPDATE ticket SET status_id = 2 WHERE id = :id",[':id'=>$_SESSION['id']]);
     $data = $stmt->fetch();
     header('Location: tickets-list.php');
     exit();

@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require_once 'src/DB.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $_POST['user'];
     $password = $_POST['password'];
@@ -19,17 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
         try {
-            $pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
-            $stmt = $pdo->prepare('INSERT INTO user (username, password) VALUES (:username, :password)');
-            $stmt->execute([
-                ':username' => $user,
-                ':password' => $hashedPassword
-            ]);
+            $db = new DB('ticket','root','secret');
+            $db->run('INSERT INTO user (username, password) VALUES (:username, :password)',[':username'=>$user, ':password'=>$hashedPassword]);
         } catch (PDOException $e) {
             var_dump($e);
         }
         $_SESSION['user'] = $user;
-        $_SESSION['uid'] = $pdo->lastInsertId();
+        $_SESSION['uid'] = $db->getPDO()->lastInsertId();
         header("Location: index.php");
     }
 }

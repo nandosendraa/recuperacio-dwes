@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 session_start();
-
+require_once 'src/DB.php';
+$db = new DB('ticket','root','secret');
 const MAX_SIZE = 1024 * 1000;
 const SCREENSHOT_PATH = "uploads";
 
@@ -43,9 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 if (empty($errors)) {
     $date = new DateTime();
     try{
-        $pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
-        $stmt = $pdo->prepare('INSERT INTO ticket (title, message, email, created, status_id, screenshot, user_id) VALUES (:title, :message, :email, :created, :status_id, :screenshot, :user_id)');
-        $stmt->execute([
+        $db->run('INSERT INTO ticket (title, message, email, created, status_id, screenshot, user_id) VALUES (:title, :message, :email, :created, :status_id, :screenshot, :user_id)',[
             ':title' => $data['title'],
             ':message' => $data['message'],
             ':email' => $data['email'],
@@ -75,7 +74,7 @@ if (empty($errors)) {
 
     }
     unset($_SESSION['data']);
-    $_SESSION['errors'][] = "S'ha creat la incidencia numero ".$pdo->lastInsertId();
+    $_SESSION['errors'][] = "S'ha creat la incidencia numero ".$db->getPDO()->lastInsertId();
     header('Location: index.php');
     exit();
 }else{

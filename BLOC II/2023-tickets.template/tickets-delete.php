@@ -1,8 +1,8 @@
 <?php declare(strict_types=1); ?>
-
 <?php
+require_once 'src/DB.php';
 session_start();
-$pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
+$db = new DB('ticket','root','secret');
 if(empty($_SESSION["user"])){
     header("Location: login.php");
     exit();
@@ -11,12 +11,7 @@ if(empty($_SESSION["user"])){
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $_SESSION['id'] = $_GET['id'];
 
-
-    $stmt = $pdo->prepare("SELECT * FROM ticket WHERE id = :id");
-    $stmt->execute([
-        ':id' => $_SESSION['id'],
-
-    ]);
+    $stmt = $db->run("SELECT * FROM ticket WHERE id = :id",[':id' => $_SESSION['id']]);
     $data = $stmt->fetch();
 }
 
@@ -30,10 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         exit();
     }
     if ($response == 'Si'){
-        $stmt = $pdo->prepare("DELETE  FROM ticket WHERE id = :id");
-        $stmt->execute([
-            ':id' => $_SESSION['id'],
-        ]);
+        $db->run("DELETE  FROM ticket WHERE id = :id",[':id' => $_SESSION['id']]);
+
         $message = "S'ha eliminat el ticket correctament";
         unset($_SESSION['id']);
         header('Location: tickets-list.php');
