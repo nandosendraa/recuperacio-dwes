@@ -1,6 +1,9 @@
 <?php declare(strict_types=1); ?>
 <?php session_start();
-
+if(empty($_SESSION["user"])){
+    header("Location: login.php");
+    exit();
+}
 
 if (false)
     die("Aquest pàgina sols admet el mètode GET");

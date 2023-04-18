@@ -12,7 +12,9 @@
             <li>
                 <a href="index.php">Inici</a>
             </li>
-
+            <li>
+                <a href="register.php">Registre</a>
+            </li>
             <li>
                 <a href="login.php">Inici de sessió</a>
             </li>
@@ -21,6 +23,9 @@
             </li>
             <li>
                 <a href="tickets-list.php">Incidències</a>
+            </li>
+            <li>
+                <a href="my-tickets-list.php">Les meues incidendies</a>
             </li>
         </ul>
     </nav>
@@ -35,7 +40,7 @@
                 <th>descripció</th>
                 <th>data de creació</th>
                 <th>estat</th>
-                <th colspan="2">operacions</th>
+                <th colspan="3">operacions</th>
             </tr>
             <?php foreach ($tickets as $ticket): ?>
                 <tr>
@@ -46,6 +51,7 @@
                     <td><?= $ticket["status_id"] ?></td>
                     <td><a href="tickets-close.php?id=<?= $ticket["id"] ?>">tancar</a></td>
                     <td><a href="tickets-delete.php?id=<?= $ticket["id"] ?>">esborrar</a></td>
+                    <td><a href="tickets-comment.php?id=<?= $ticket["id"] ?>">comentar</a></td>
                 </tr>
             <?php endforeach; ?>
         </table>

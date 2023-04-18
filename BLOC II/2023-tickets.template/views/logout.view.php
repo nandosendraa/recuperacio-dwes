@@ -13,6 +13,9 @@
                 <a href="index.php">Inici</a>
             </li>
             <li>
+                <a href="register.php">Registre</a>
+            </li>
+            <li>
                 <a href="login.php">Inici de sessió</a>
             </li>
             <li>
@@ -20,6 +23,9 @@
             </li>
             <li>
                 <a href="tickets-list.php">Incidències</a>
+            </li>
+            <li>
+                <a href="my-tickets-list.php">Les meues incidendies</a>
             </li>
         </ul>
     </nav>

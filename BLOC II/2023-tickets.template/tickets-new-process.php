@@ -44,14 +44,15 @@ if (empty($errors)) {
     $date = new DateTime();
     try{
         $pdo = new PDO("mysql:host=mysql-server; dbname=ticket", "root", "secret");
-        $stmt = $pdo->prepare('INSERT INTO ticket (title, message, email, created, status_id, screenshot) VALUES (:title, :message, :email, :created, :status_id, :screenshot)');
+        $stmt = $pdo->prepare('INSERT INTO ticket (title, message, email, created, status_id, screenshot, user_id) VALUES (:title, :message, :email, :created, :status_id, :screenshot, :user_id)');
         $stmt->execute([
             ':title' => $data['title'],
             ':message' => $data['message'],
             ':email' => $data['email'],
             ':created' => $date->format("Y-m-d H:i:s"),
             ':status_id' => 0,
-            ':screenshot' => $data['screenshot']
+            ':screenshot' => $data['screenshot'],
+            'user_id' => $_SESSION['uid']
         ]);
     }
     catch (PDOException $e){var_dump($e);}

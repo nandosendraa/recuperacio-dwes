@@ -35,5 +35,6 @@ if (!empty($errors)) {
     header("Location: login.php");
 }else{
     $_SESSION['user'] = $username;
+    $_SESSION['uid'] = $userInfo[0]['id'];
     header("Location: index.php");
 }

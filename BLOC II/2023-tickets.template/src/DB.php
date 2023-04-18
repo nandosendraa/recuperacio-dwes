@@ -9,7 +9,7 @@ class DB
 {
     private PDO $pdo;
 
-    public function __construct($db, $username = NULL, $password = NULL, $host = '127.0.0.1', $port = 3306, $options = [])
+    public function __construct($db, $username = NULL, $password = NULL, $host = 'mysql-server', $port = 3306, $options = [])
     {
         $default_options = [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

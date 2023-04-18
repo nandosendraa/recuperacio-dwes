@@ -2,6 +2,11 @@
 declare(strict_types=1);
 session_start();
 if(empty($_SESSION["user"])){
+        header("Location: login.php");
+        exit();
+    }
+
+if($_SESSION['user'] != 'admin') {
     header("Location: login.php");
     exit();
 }
