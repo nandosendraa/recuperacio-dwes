@@ -12,10 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[]= "Has de introduir la contrasenya";
     elseif(strlen($user)>16)
         $errors[]= "La contrasenya ha de tindre menys de 16 caracters";
-    if (!empty($errors)) {
-        $_SESSION['errors'] = $errors;
-        header("Location: register.php");
-    }
     if (empty($errors)) {
         $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
         try {

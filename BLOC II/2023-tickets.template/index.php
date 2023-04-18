@@ -1,5 +1,6 @@
 <?php declare(strict_types=1); ?>
 <?php session_start();
+require_once 'src/FlashMessage.php';
 if(empty($_SESSION["user"])){
     header("Location: login.php");
     exit();
@@ -23,10 +24,7 @@ if (isset($_GET['mode'])) {
 if (isset($_SESSION['data']))
     $data = $_SESSION['data'];
 
-if (isset($_SESSION['errors'])) {
-    $errors = $_SESSION['errors'];
-    unset($_SESSION['errors']);
-}
+$errors = FlashMessage::get('errors',[]);
 
 
 const MAX_SIZE = 1024*1000;

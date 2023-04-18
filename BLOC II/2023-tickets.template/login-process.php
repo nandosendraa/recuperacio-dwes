@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 session_start();
 require_once 'src/DB.php';
-unset($_SESSION['errors']);
+require_once 'src/FlashMessage.php';
 $db = new DB('ticket','root','secret');
 $username="";
 $password="";
@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     $stmt = $db->run("SELECT * FROM user WHERE username = :user",[':user'=>$username]);
     $userInfo = $stmt->fetchAll();
-    var_dump($userInfo);
 
     if(empty($userInfo)){
         $errors[] = "L'usuari no es correcte";
@@ -31,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
 }
 if (!empty($errors)) {
-    $_SESSION['errors'] = $errors;
+    FlashMessage::set('errors',$errors);
+    var_dump($errors);
     header("Location: login.php");
 }else{
     $_SESSION['user'] = $username;

@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 session_start();
 require_once 'src/DB.php';
+require_once 'src/FlashMessage.php';
 $db = new DB('ticket','root','secret');
 const MAX_SIZE = 1024 * 1000;
 const SCREENSHOT_PATH = "uploads";
@@ -74,12 +75,12 @@ if (empty($errors)) {
 
     }
     unset($_SESSION['data']);
-    $_SESSION['errors'][] = "S'ha creat la incidencia numero ".$db->getPDO()->lastInsertId();
+    FlashMessage::set('errors',["S'ha creat la incidencia numero ".$db->getPDO()->lastInsertId()]);
     header('Location: index.php');
     exit();
 }else{
     $_SESSION['data'] = $data;
-    $_SESSION['errors'] = $errors;
+    FlashMessage::set('errors',$errors);
     header('Location: index.php');
     exit();
 }

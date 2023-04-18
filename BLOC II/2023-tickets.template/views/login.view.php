@@ -32,9 +32,9 @@
 </header>
 <h2>Login</h2>
 
-<?php if (!empty($_SESSION['errors'])): ?>
+<?php if (!empty($errors)): ?>
     <ul>
-        <?php foreach ($_SESSION['errors'] as $error) : ?>
+        <?php foreach ($errors as $error) : ?>
             <li><?= $error ?></li>
         <?php endforeach ?>
     </ul>

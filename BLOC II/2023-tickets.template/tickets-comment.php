@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once 'src/DB.php';
+require_once 'src/FlashMessage.php';
 session_start();
 $db = new DB('ticket','root','secret');
 if(empty($_SESSION["user"])){
@@ -12,10 +13,7 @@ if($_SESSION['user'] != 'admin') {
     exit();
 }
 
-if (isset($_SESSION['errors'])){
-    $errors = $_SESSION['errors'];
-    unset($_SESSION['errors']);
-}
+$errors = FlashMessage::get('errors',[]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $id = $_GET['id'];

@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 session_start();
-
+require_once 'src/FlashMessage.php';
 $username = $_SESSION["username"] ?? "";
-$errors = $_SESSION["error"] ?? [];
+$errors = FlashMessage::get('errors',[]);
 
-unset($_SESSION["error"]);
 
 require_once 'views/login.view.php';
