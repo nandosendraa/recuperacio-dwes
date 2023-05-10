@@ -1,5 +1,6 @@
 {
     "require": {
-        "webmozart/assert": "^1.11"
+        "webmozart/assert": "^1.11",
+        "symfony/http-foundation": "^6.2"
     }
 }

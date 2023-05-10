@@ -1,5 +1,9 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . '/vendor/autoload.php';
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 require_once 'src/DB.php';
 require_once 'src/FlashMessage.php';
 session_start();
@@ -26,4 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $data = $stmt->fetch();
 }
 
-require "views/tickets-comment.view.php";
+$request = Request::createFromGlobals();
+
+$response = new Response();
+
+ob_start();
+require __DIR__ . '/views/tickets-comment.view.php';
+$content = ob_get_clean();
+
+$response->setContent($content);
+$response->setStatusCode(Response::HTTP_OK);
+$response->headers->set('content-type','text/html');
+$response->send();
+

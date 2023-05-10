@@ -1,13 +1,16 @@
-<?php declare(strict_types=1); ?>
+<?php declare(strict_types=1);
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response; ?>
 <?php session_start();
+require_once __DIR__ . '/vendor/autoload.php';
+
 require_once 'src/FlashMessage.php';
 if(empty($_SESSION["user"])){
     header("Location: login.php");
     exit();
 }
 
-if (false)
-    die("Aquest pàgina sols admet el mètode GET");
 
 $mode = 'clar';
 $data["title"] = "";
@@ -29,4 +32,15 @@ $errors = FlashMessage::get('errors',[]);
 
 const MAX_SIZE = 1024*1000;
 
-require "views/index.view.php";
+$request = Request::createFromGlobals();
+
+$response = new Response();
+
+ob_start();
+require __DIR__ . '/views/index.view.php';
+$content = ob_get_clean();
+
+$response->setContent($content);
+$response->setStatusCode(Response::HTTP_OK);
+$response->headers->set('content-type','text/html');
+$response->send();

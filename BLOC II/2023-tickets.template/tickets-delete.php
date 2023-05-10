@@ -1,4 +1,7 @@
-<?php declare(strict_types=1); ?>
+<?php declare(strict_types=1);
+require_once __DIR__ . '/vendor/autoload.php';
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response; ?>
 <?php
 require_once 'src/DB.php';
 session_start();
@@ -33,5 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         exit();
     }
 }
+$request = Request::createFromGlobals();
 
-require "views/tickets-delete.view.php";
+$response = new Response();
+
+ob_start();
+require __DIR__ . '/views/tickets-delete.view.php';
+$content = ob_get_clean();
+
+$response->setContent($content);
+$response->setStatusCode(Response::HTTP_OK);
+$response->headers->set('content-type','text/html');
+$response->send();

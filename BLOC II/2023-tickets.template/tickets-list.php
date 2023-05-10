@@ -1,5 +1,9 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . '/vendor/autoload.php';
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 session_start();
 require_once 'src/DB.php';
 $db = new DB('ticket','root','secret');
@@ -21,5 +25,16 @@ try {
 catch (PDOException $e) {
     die($e-> getMessage ());
 }
+$request = Request::createFromGlobals();
 
-require "views/tickets-list.view.php";
+$response = new Response();
+
+ob_start();
+require __DIR__ . '/views/tickets-list.view.php';
+$content = ob_get_clean();
+
+$response->setContent($content);
+$response->setStatusCode(Response::HTTP_OK);
+$response->headers->set('content-type','text/html');
+$response->send();
+

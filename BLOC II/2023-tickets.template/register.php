@@ -1,4 +1,9 @@
 <?php
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+require_once __DIR__ . '/vendor/autoload.php';
 session_start();
 require_once 'src/DB.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,4 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: index.php");
     }
 }
-require "views/register.view.php";
+$request = Request::createFromGlobals();
+
+$response = new Response();
+
+ob_start();
+require __DIR__ . '/views/register.view.php';
+$content = ob_get_clean();
+
+$response->setContent($content);
+$response->setStatusCode(Response::HTTP_OK);
+$response->headers->set('content-type','text/html');
+$response->send();
