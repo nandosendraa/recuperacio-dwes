@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
-require_once __DIR__ . '/vendor/autoload.php';
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response; ?>
 <?php
 require_once 'src/DB.php';
-session_start();
+
 $db = new DB('ticket','root','secret');
 if(empty($_SESSION["user"])){
     header("Location: login.php");

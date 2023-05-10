@@ -2,9 +2,9 @@
 <html lang="ca">
 <head>
     <title>Gestor d'incidències</title>
-    <link href="assets/global.css" rel="stylesheet"/>
+    <link href="../assets/global.css" rel="stylesheet"/>
     <?php if ($mode == 'dark') :?>
-    <link href="assets/dark.css" rel="stylesheet"/>
+    <link href="../assets/dark.css" rel="stylesheet"/>
     <?php endif;?>
 </head>
 <body>
@@ -13,25 +13,25 @@
     <nav>
         <ul>
             <li>
-                <a href="index.php">Inici</a>
+                <a href="/">Inici</a>
             </li>
             <li>
-                <a href="register.php">Registre</a>
+                <a href="/register">Registre</a>
             </li>
             <li>
-                <a href="login.php">Inici de sessió</a>
+                <a href="/login">Inici de sessió</a>
             </li>
             <li>
-                <a href="logout.php">Tanca la sessió</a>
+                <a href="/logout">Tanca la sessió</a>
             </li>
             <li>
-                <a href="tickets-list.php">Incidències</a>
+                <a href="/tickets-list">Incidències</a>
             </li>
             <li>
-                Mode: <a href="index.php?mode=clar">clar</a> · <a href="index.php?mode=dark">oscur</a>
+                Mode: <a href="/?mode=clar">clar</a> · <a href="/?mode=dark">oscur</a>
             </li>
             <li>
-                <a href="my-tickets-list.php">Les meues incidendies</a>
+                <a href="/my-tickets-list">Les meues incidendies</a>
             </li>
         </ul>
     </nav>

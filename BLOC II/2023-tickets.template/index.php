@@ -2,12 +2,11 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response; ?>
-<?php session_start();
-require_once __DIR__ . '/vendor/autoload.php';
+<?php
 
 require_once 'src/FlashMessage.php';
 if(empty($_SESSION["user"])){
-    header("Location: login.php");
+    header("Location: /login");
     exit();
 }
 

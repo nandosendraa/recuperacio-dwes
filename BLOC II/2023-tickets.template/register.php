@@ -3,8 +3,8 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-require_once __DIR__ . '/vendor/autoload.php';
-session_start();
+
+
 require_once 'src/DB.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $_POST['user'];

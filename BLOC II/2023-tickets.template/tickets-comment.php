@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/vendor/autoload.php';
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 require_once 'src/DB.php';
 require_once 'src/FlashMessage.php';
-session_start();
+
 $db = new DB('ticket','root','secret');
 if(empty($_SESSION["user"])){
     header("Location: login.php");

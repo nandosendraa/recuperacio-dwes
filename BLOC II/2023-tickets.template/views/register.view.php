@@ -2,7 +2,7 @@
 <html lang="ca">
 <head>
     <title>Gestor d'incidències</title>
-    <link href="assets/global.css" rel="stylesheet"/>
+    <link href="../assets/global.css" rel="stylesheet"/>
 </head>
 <body>
 <header>

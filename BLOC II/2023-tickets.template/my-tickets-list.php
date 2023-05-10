@@ -4,9 +4,9 @@ declare(strict_types=1);
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-require_once __DIR__ . '/vendor/autoload.php';
+
 require_once 'src/DB.php';
-session_start();
+
 if (empty($_SESSION["user"])) {
     header("Location: login.php");
     exit();
